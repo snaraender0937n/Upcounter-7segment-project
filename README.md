@@ -5,40 +5,42 @@ A complete hardware + software project demonstrating binary counting, BCD decodi
 ---
 
 ## 🚀 Overview
-This project implements **two digital counting systems**:
+This project implements **two complete digital counting systems**:
 
 1. **Manual 4-bit Counter**  
-   Built using 74LS-series TTL ICs (adder, comparator, BCD-to-7seg driver)
+   Built using classic 74LS TTL ICs — binary adder, comparator, and BCD decoder.
 
 2. **Automatic 4-bit Up Counter**  
-   Built using CD4516 CMOS counter with external clock sources  
-   (Arduino Nano OR ADALM1000 using Python)
+   Built using the CD4516 CMOS counter driven by a clock from  
+   **Arduino Nano** or **ADALM1000 (Python-controlled)**.
 
-Both systems display output using **dual seven-segment displays** and are fully simulated in **Logisim Evolution**.
+Both systems drive **dual seven-segment displays**, and both are fully recreated in **Logisim Evolution** for easy simulation and verification.
 
 ---
 
 # 🧩 Features
 
 ### 🔹 Manual Counter Hardware
-- 74LS83 → 4-bit binary adder  
-- 74LS85 → magnitude comparator  
-- 74LS47 → BCD-to-7-segment decoder (common anode)  
-- Manual input via ADALM1000 or physical switches  
-- Output shown on two 7-segment displays  
+- 74LS83 — 4-bit binary adder  
+- 74LS85 — magnitude comparator  
+- 74LS47 — BCD-to-7-segment decoder (common anode)  
+- Manual increment input from switches or ADALM1000  
+- Output displayed on two 7-segment displays  
 
 ### 🔹 Automatic Counter Hardware
-- CD4516 → 4-bit up/down counter  
-- Clock generated using:  
+- CD4516 — 4-bit up/down counter  
+- Clock generation methods:  
   - Arduino Nano (`clock_generator.ino`)  
   - ADALM1000 (`adalam_clock.py`)  
-- Output decoded through ROM/BCD to seven-segment  
+- Output decoded to seven-segment via ROM or BCD logic  
 
-### 🔹 Software Simulation
-- Logisim Evolution circuits (`manual_counter.circ`, `auto_counter.circ`)  
+### 🔹 Software Simulation (Logisim Evolution)
+- Full circuits:
+  - `manual_counter.circ`
+  - `auto_counter.circ`
 - ROM-based BCD → 7-segment decoder  
-- 7→7 splitter wiring  
-- Optional LTspice behavioural model  
+- Splitter-based segment routing  
+- PixelPlus 2 support for waveform/simulation visualization  
 
 ---
 
@@ -52,7 +54,6 @@ firmware/
   python/          → ADALM1000 clock (.py)
 simulations/
   logisim/         → .circ files + ROM data
-  ltspice/         → optional 7-segment model
 docs/
   BOM.md           → component list
   wiring.md        → wiring & IC pin mapping
@@ -63,7 +64,7 @@ README.md
 ---
 
 # 🔍 Logisim ROM Table (BCD → 7-Segment)
-Paste this inside the ROM contents editor:
+Paste this into your ROM:
 
 ```
 v2.0 raw
@@ -96,39 +97,43 @@ Upload:
 ```
 clock_generator.ino
 ```
-Produces a square wave on pin D8 for the CD4516 clock input.
+Generates a clean square-wave clock on pin **D8**.
 
 ### ⏱️ ADALM1000  
 Run:
 ```
 python adalam_clock.py
 ```
-Toggles a digital pin to generate a hardware clock pulse.
+Toggles digital output to create a hardware clock signal.
 
 ---
 
-# 🔧 Hardware Required
-- 74LS83 (4-bit adder)  
-- 74LS85 (comparator)  
-- 74LS47 (BCD → 7-seg)  
-- CD4516 (up/down counter)  
-- Two 7-segment displays (common anode)  
-- Resistors: 330Ω  
+# 🛠️ Hardware Required
+- 74LS83 — Binary adder  
+- 74LS85 — Comparator  
+- 74LS47 — BCD → 7-seg decoder  
+- CD4516 — Up/down counter  
+- 2× 7-segment displays (common anode)  
+- Resistors — 330 Ω  
 - Arduino Nano / ADALM1000  
 - Breadboard + jumper wires  
 
-Full list: `docs/BOM.md`.
+More details in `docs/BOM.md`.
 
 ---
 
-# 🧪 Simulation & Development Tools
-
+# 🧪 Simulation Tools
 | Tool | Purpose |
 |------|---------|
-| **Logisim Evolution** | Digital circuit design & verification |
-| **PixelPlus 2** | Waveform analysis and simulation support |
-| **LTspice** | 7-segment behaviour modelling (optional) |
-| **Arduino IDE** | Uploading clock generator firmware to Arduino Nano |
-| **Python + pyserial** | Clock generation using ADALM1000 |
+| **Logisim Evolution** | Main digital circuit design & testing |
+| **PixelPlus 2** | Waveform and logic visualization |
+| **Arduino IDE** | Uploading Arduino clock firmware |
+| **Python + pyserial** | ADALM1000 clock control |
 
-Both `.circ` files are included in the repo.
+---
+
+# 📜 License
+This project is released under the **MIT License**.  
+You may use, modify, and distribute it freely.
+
+---
