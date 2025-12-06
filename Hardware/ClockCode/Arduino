@@ -1,0 +1,17 @@
+// 1 Hz Clock Generator for CD4516 or any digital counter
+// Output Pin: D8
+// Frequency: 1 Hz (1 pulse per second)
+
+const int clockPin = 8;  
+
+void setup() {
+  pinMode(clockPin, OUTPUT);
+  digitalWrite(clockPin, LOW);
+}
+
+void loop() {
+  digitalWrite(clockPin, HIGH);   // Clock HIGH
+  delay(500);                     // 0.5 sec
+  digitalWrite(clockPin, LOW);    // Clock LOW
+  delay(500);                     // 0.5 sec
+}
