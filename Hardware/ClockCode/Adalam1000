@@ -1,0 +1,26 @@
+import time
+import libm2k
+
+# Connect to ADALM1000
+ctx = libm2k.m2kOpen()
+if ctx is None:
+    raise Exception("Could not connect to ADALM1000!")
+
+# Enable digital output
+digital = ctx.getDigital()
+digital.setDirection(0, libm2k.DIO_OUTPUT)   # DIO0 as output
+
+print("Generating 1 Hz clock... Press Ctrl+C to stop.")
+
+try:
+    while True:
+        digital.setValueRaw(0, 1)   # HIGH
+        time.sleep(0.5)             # 500 ms
+
+        digital.setValueRaw(0, 0)   # LOW
+        time.sleep(0.5)             # 500 ms
+
+except KeyboardInterrupt:
+    print("\nClock stopped.")
+    digital.setValueRaw(0, 0)       # Ensure LOW state
+    libm2k.m2kClose(ctx)
