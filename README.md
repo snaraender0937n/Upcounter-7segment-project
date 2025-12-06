@@ -121,18 +121,14 @@ Full list: `docs/BOM.md`.
 
 ---
 
-# 🧪 Simulation Tools
+# 🧪 Simulation & Development Tools
+
 | Tool | Purpose |
 |------|---------|
-| **Logisim Evolution** | Main circuit design & verification |
+| **Logisim Evolution** | Digital circuit design & verification |
+| **PixelPlus 2** | Waveform analysis and simulation support |
 | **LTspice** | 7-segment behaviour modelling (optional) |
+| **Arduino IDE** | Uploading clock generator firmware to Arduino Nano |
+| **Python + pyserial** | Clock generation using ADALM1000 |
 
 Both `.circ` files are included in the repo.
-
----
-
-# 📜 License
-This project is released under the **MIT License**.  
-You may use, modify, and distribute it freely.
-
----
