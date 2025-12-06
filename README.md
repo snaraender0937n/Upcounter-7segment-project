@@ -1,99 +1,71 @@
-📘 4-Bit Counter & 7-Segment Display Project (Manual + Automatic)
+# ⭐ 4-Bit Digital Counter System (Manual & Automatic)
+### TTL + CMOS + Logisim Simulation + Arduino/ADALM1000 Clocking  
+A complete hardware + software project demonstrating binary counting, BCD decoding, and seven-segment display control.
 
-This repository contains the full hardware and software implementation of two digital counter systems:
+---
 
-A manual 4-bit counter using TTL ICs
+## 🚀 Overview
+This project implements **two digital counting systems**:
 
-An automatic up-counter using a CMOS counter
+1. **Manual 4-bit Counter**  
+   Built using 74LS-series TTL ICs (adder, comparator, BCD-to-7seg driver)
 
-Both systems drive dual seven-segment displays and include Logisim Evolution simulations, Arduino-based clock generation, and Python-controlled ADALM1000 clocking.
+2. **Automatic 4-bit Up Counter**  
+   Built using CD4516 CMOS counter with external clock sources  
+   (Arduino Nano OR ADALM1000 using Python)
 
-🔧 Project Features
-Manual Counter (Hardware)
+Both systems display output using **dual seven-segment displays** and are fully simulated in **Logisim Evolution**.
 
-74LS83 – 4-bit binary adder
+---
 
-74LS85 – magnitude comparator
+# 🧩 Features
 
-74LS47 – BCD-to-7-segment decoder (common anode)
+### 🔹 Manual Counter Hardware
+- 74LS83 → 4-bit binary adder  
+- 74LS85 → magnitude comparator  
+- 74LS47 → BCD-to-7-segment decoder (common anode)  
+- Manual input via ADALM1000 or physical switches  
+- Output shown on two 7-segment displays  
 
-Two 7-segment displays
+### 🔹 Automatic Counter Hardware
+- CD4516 → 4-bit up/down counter  
+- Clock generated using:  
+  - Arduino Nano (`clock_generator.ino`)  
+  - ADALM1000 (`adalam_clock.py`)  
+- Output decoded through ROM/BCD to seven-segment  
 
-Manual input from ADALM1000 kit or switches
+### 🔹 Software Simulation
+- Logisim Evolution circuits (`manual_counter.circ`, `auto_counter.circ`)  
+- ROM-based BCD → 7-segment decoder  
+- 7→7 splitter wiring  
+- Optional LTspice behavioural model  
 
-Automatic Counter (Hardware)
+---
 
-CD4516 – 4-bit up/down counter
-
-Clock sources:
-
-Arduino Nano (C programmed)
-
-ADALM1000 + Python script
-
-Display through 74LS47 or ROM → splitter → 7-seg
-
-Software Simulation
-
-Full Logisim Evolution circuits:
-
-manual_counter.circ
-
-auto_counter.circ
-
-ROM-based BCD→7-segment decoder
-
-Splitter wiring for segment extraction
-
-LTspice behavioural model for 7-segment verification
-
-📁 Repository Structure
+# 🗂️ Repository Structure
+```
 hardware/
-    schematics/      → wiring diagrams & IC pin maps
-    images/          → photos of real hardware
+  schematics/      → diagrams & pin maps
+  images/          → hardware photos
 firmware/
-    arduino/         → Arduino clock generator (.ino)
-    python/          → ADALM1000 clock script (.py)
+  arduino/         → Arduino clock (.ino)
+  python/          → ADALM1000 clock (.py)
 simulations/
-    logisim/         → .circ files + ROM tables
-    ltspice/         → 7-segment model
+  logisim/         → .circ files + ROM data
+  ltspice/         → optional 7-segment model
 docs/
-    BOM.md           → list of all components used
-    wiring.md        → step-by-step hardware wiring
+  BOM.md           → component list
+  wiring.md        → wiring & IC pin mapping
 LICENSE
 README.md
+```
 
-🧠 Manual Counter – How It Works
+---
 
-The manual system allows user-controlled incrementation through switches:
+# 🔍 Logisim ROM Table (BCD → 7-Segment)
+Paste this inside the ROM contents editor:
 
-74LS83 adds the manual input bits
-
-74LS85 compares the count with a preset value
-
-74LS47 converts BCD output into 7-segment signals
-
-Two displays show the decimal result
-
-This demonstrates addition, comparison, and BCD decoding using classical TTL ICs.
-
-⚙️ Automatic Counter – How It Works
-
-The automatic mode uses a CD4516 counter that increments on every clock pulse.
-
-Clock sources supported:
-
-Arduino Nano generating a 1–10 Hz square wave
-
-ADALM1000 toggled via Python for arbitrary frequency clocks
-
-The output is decoded the same way as in the manual version.
-
-🖥️ Simulation in Logisim Evolution
-
-The repository includes complete .circ files.
-
-ROM contents:
+```
 v2.0 raw
 7E
 30
@@ -111,45 +83,56 @@ v2.0 raw
 00
 00
 00
+```
 
+Use a **7→7 Splitter** to route bits to segments **a–g**.
 
-Use a splitter (7 → 7) to route ROM output bits to segments a–g.
+---
 
-🔌 Arduino Clock Generator
+# ⚙️ Clock Generation
 
-Upload clock_generator.ino to Arduino Nano.
+### ⏱️ Arduino Nano  
+Upload:
+```
+clock_generator.ino
+```
+Produces a square wave on pin D8 for the CD4516 clock input.
 
-It outputs a square wave on a chosen pin (default D8) to drive the CD4516 clock input.
-
-🐍 ADALM1000 Python Clock
-
+### ⏱️ ADALM1000  
 Run:
-
+```
 python adalam_clock.py
+```
+Toggles a digital pin to generate a hardware clock pulse.
 
+---
 
-This toggles GPIO (via DTR or device-specific control) to create a clock pulse for the counter.
+# 🔧 Hardware Required
+- 74LS83 (4-bit adder)  
+- 74LS85 (comparator)  
+- 74LS47 (BCD → 7-seg)  
+- CD4516 (up/down counter)  
+- Two 7-segment displays (common anode)  
+- Resistors: 330Ω  
+- Arduino Nano / ADALM1000  
+- Breadboard + jumper wires  
 
-📚 Bill of Materials
+Full list: `docs/BOM.md`.
 
-Located in docs/BOM.md.
+---
 
-Includes:
+# 🧪 Simulation Tools
+| Tool | Purpose |
+|------|---------|
+| **Logisim Evolution** | Main circuit design & verification |
+| **LTspice** | 7-segment behaviour modelling (optional) |
 
-74LS83
+Both `.circ` files are included in the repo.
 
-74LS85
+---
 
-74LS47
+# 📜 License
+This project is released under the **MIT License**.  
+You may use, modify, and distribute it freely.
 
-CD4516
-
-2 × common-anode 7-segment displays
-
-Resistors (330Ω)
-
-Arduino Nano
-
-ADALM1000 kit
-
-Breadboard & jumper wires
+---
